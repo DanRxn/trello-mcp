@@ -25,6 +25,14 @@
     "llm",
     "claude"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/endlesshoper/trello-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/endlesshoper/trello-mcp/issues"
+  },
+  "homepage": "https://github.com/endlesshoper/trello-mcp#readme",
   "author": "",
   "license": "MIT",
   "dependencies": {
