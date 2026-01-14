@@ -1,0 +1,11 @@
+{
+  "mcp": {
+    "test": {
+      "type": "local",
+      "command": [
+        "npx",
+        "testing"
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Source files (dist is what we publish)
+src/
+
+# Development files
+*.txt
+.claude/
+tsconfig.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
