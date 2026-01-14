@@ -1,6 +1,6 @@
 {
   "name": "trello-mcp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A comprehensive MCP server for Trello - manage boards, lists, cards, checklists, labels, and more",
   "type": "module",
   "main": "dist/index.js",
