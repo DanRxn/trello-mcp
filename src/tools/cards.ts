@@ -40,7 +40,7 @@ Returns:
       try {
         const client = getTrelloClient();
         const card = await client.get<TrelloCard>(`/cards/${card_id}`, {
-          fields: "name,desc,due,dueComplete,shortUrl,labels,idMembers,idList,idBoard,closed",
+          fields: "name,desc,due,dueComplete,shortUrl,labels,idMembers,idList,idBoard,closed,pos",
           checklists: "all",
           attachments: "true",
           members: "true",
@@ -81,6 +81,7 @@ Returns:
               date: a.date,
             })) || [],
           memberIds: card.idMembers || [],
+          pos: card.pos,
         };
 
         return {

@@ -147,7 +147,7 @@ Returns:
       try {
         const client = getTrelloClient();
         const cards = await client.get<TrelloCard[]>(`/lists/${list_id}/cards`, {
-          fields: "name,desc,due,dueComplete,shortUrl,labels,idMembers,closed",
+          fields: "name,desc,due,dueComplete,shortUrl,labels,idMembers,closed,pos",
         });
 
         const result = cards.map((c) => ({
@@ -160,6 +160,7 @@ Returns:
           labels: c.labels?.map((l) => ({ id: l.id, name: l.name, color: l.color })) || [],
           memberIds: c.idMembers || [],
           archived: c.closed,
+          pos: c.pos,
         }));
 
         return {
