@@ -185,6 +185,7 @@ Returns:
                     id: item.id,
                     name: item.name,
                     complete: item.state === "complete",
+                    pos: item.pos,
                 })) || [],
             };
             return {
@@ -241,6 +242,7 @@ Returns:
                     id: item.id,
                     name: item.name,
                     complete: item.state === "complete",
+                    pos: item.pos,
                 },
             };
         }
@@ -297,10 +299,16 @@ Returns:
                 updates.state = state;
             if (pos !== undefined)
                 updates.pos = String(pos);
-            await client.put(`/cards/${card_id}/checkItem/${check_item_id}`, updates);
+            const item = await client.put(`/cards/${card_id}/checkItem/${check_item_id}`, updates);
             const stateMsg = state ? ` as ${state}` : "";
             return {
                 content: [{ type: "text", text: `Checklist item updated${stateMsg}` }],
+                structuredContent: {
+                    id: item.id,
+                    name: item.name,
+                    complete: item.state === "complete",
+                    pos: item.pos,
+                },
             };
         }
         catch (error) {

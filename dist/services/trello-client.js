@@ -70,46 +70,63 @@ export class TrelloClient {
         return this.handleResponse(response);
     }
     /**
-     * POST request
+     * Encode a body record as application/x-www-form-urlencoded.
+     * Skips undefined/null entries.
+     */
+    encodeBody(body) {
+        const params = new URLSearchParams();
+        for (const [key, value] of Object.entries(body)) {
+            if (value !== undefined && value !== null) {
+                params.append(key, value);
+            }
+        }
+        return params.toString();
+    }
+    /**
+     * POST request. Sends `body` as form-encoded request body so large fields
+     * (e.g. card descriptions) don't overflow the URL length limit and so
+     * write-only fields like `pos` are reliably honored by the Trello API.
+     * Auth (key/token) and any caller-supplied `params` stay in the query string.
      */
     async post(endpoint, body, params) {
         const url = this.buildUrl(endpoint, params);
-        // Trello API prefers query params for POST data
-        const finalUrl = new URL(url);
-        if (body) {
-            for (const [key, value] of Object.entries(body)) {
-                if (value !== undefined && value !== null) {
-                    finalUrl.searchParams.set(key, value);
-                }
-            }
-        }
-        const response = await fetch(finalUrl.toString(), {
+        const init = {
             method: "POST",
             headers: {
                 Accept: "application/json",
             },
-        });
+        };
+        if (body) {
+            const encoded = this.encodeBody(body);
+            if (encoded.length > 0) {
+                init.headers["Content-Type"] =
+                    "application/x-www-form-urlencoded";
+                init.body = encoded;
+            }
+        }
+        const response = await fetch(url, init);
         return this.handleResponse(response);
     }
     /**
-     * PUT request
+     * PUT request. See `post` for the rationale on form-encoded body.
      */
     async put(endpoint, body, params) {
         const url = this.buildUrl(endpoint, params);
-        const finalUrl = new URL(url);
-        if (body) {
-            for (const [key, value] of Object.entries(body)) {
-                if (value !== undefined && value !== null) {
-                    finalUrl.searchParams.set(key, value);
-                }
-            }
-        }
-        const response = await fetch(finalUrl.toString(), {
+        const init = {
             method: "PUT",
             headers: {
                 Accept: "application/json",
             },
-        });
+        };
+        if (body) {
+            const encoded = this.encodeBody(body);
+            if (encoded.length > 0) {
+                init.headers["Content-Type"] =
+                    "application/x-www-form-urlencoded";
+                init.body = encoded;
+            }
+        }
+        const response = await fetch(url, init);
         return this.handleResponse(response);
     }
     /**

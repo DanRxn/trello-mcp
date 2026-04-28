@@ -1,3 +1,7 @@
 node_modules/
 .env
 .env.*
+
+# Local-only credential harness for running scripts/test-patch.mjs against
+# Trello via 1Password. Hardcodes Dan's vault/keychain paths.
+scripts/run-with-creds.zsh

@@ -55,6 +55,7 @@ Returns:
                         id: item.id,
                         name: item.name,
                         complete: item.state === "complete",
+                        pos: item.pos,
                     })) || [],
                 })) || [],
                 attachments: card.attachments?.map((a) => ({

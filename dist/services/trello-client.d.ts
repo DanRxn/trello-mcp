@@ -22,11 +22,19 @@ export declare class TrelloClient {
      */
     get<T>(endpoint: string, params?: Record<string, string>): Promise<T>;
     /**
-     * POST request
+     * Encode a body record as application/x-www-form-urlencoded.
+     * Skips undefined/null entries.
+     */
+    private encodeBody;
+    /**
+     * POST request. Sends `body` as form-encoded request body so large fields
+     * (e.g. card descriptions) don't overflow the URL length limit and so
+     * write-only fields like `pos` are reliably honored by the Trello API.
+     * Auth (key/token) and any caller-supplied `params` stay in the query string.
      */
     post<T>(endpoint: string, body?: Record<string, string | undefined>, params?: Record<string, string>): Promise<T>;
     /**
-     * PUT request
+     * PUT request. See `post` for the rationale on form-encoded body.
      */
     put<T>(endpoint: string, body?: Record<string, string | undefined>, params?: Record<string, string>): Promise<T>;
     /**
